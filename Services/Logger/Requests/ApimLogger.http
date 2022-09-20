@@ -1,0 +1,18 @@
+@hostname = http://localhost:7071/runtime/webhooks/EventGrid
+
+POST {{hostname}}?functionName=ApimLogger HTTP/1.1
+Content-Type: application/json
+aeg-event-type: Notification
+
+{
+	"Topic": "Topic",
+	"Subject": "Subject",
+	"Id": "{{$guid}}",
+	"EventType": "EventType",
+	"EventTime": "{{$datetime iso8601}}",
+	"Data": {
+		"hola": "mundo"
+	},
+	"DataVersion": "1.0",
+	"MetadataVersion": "1"
+}

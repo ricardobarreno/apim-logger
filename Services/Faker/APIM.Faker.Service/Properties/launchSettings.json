@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "APIM.Faker.Service": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7081",
+      "launchBrowser": false
+    }
+  }
+}

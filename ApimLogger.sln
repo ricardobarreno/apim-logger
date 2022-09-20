@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{8F9CD50C-138C-4213-BEB2-08717627448D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Faker", "Faker", "{689CB5EE-8D5D-49AD-BC0C-6B37B1BDEB34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIM.Faker.Service", "Services\Faker\APIM.Faker.Service\APIM.Faker.Service.csproj", "{8C505868-A8F8-49F1-9B58-8F3611DB024D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logger", "Logger", "{0A783961-AD59-40F6-AD59-E607642337F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIM.Logger.Service", "Services\Logger\APIM.Logger.Service\APIM.Logger.Service.csproj", "{9572AB4D-3A70-4D13-931B-AA2FDD3AD8F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C505868-A8F8-49F1-9B58-8F3611DB024D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C505868-A8F8-49F1-9B58-8F3611DB024D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C505868-A8F8-49F1-9B58-8F3611DB024D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C505868-A8F8-49F1-9B58-8F3611DB024D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9572AB4D-3A70-4D13-931B-AA2FDD3AD8F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9572AB4D-3A70-4D13-931B-AA2FDD3AD8F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9572AB4D-3A70-4D13-931B-AA2FDD3AD8F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9572AB4D-3A70-4D13-931B-AA2FDD3AD8F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{689CB5EE-8D5D-49AD-BC0C-6B37B1BDEB34} = {8F9CD50C-138C-4213-BEB2-08717627448D}
+		{8C505868-A8F8-49F1-9B58-8F3611DB024D} = {689CB5EE-8D5D-49AD-BC0C-6B37B1BDEB34}
+		{0A783961-AD59-40F6-AD59-E607642337F4} = {8F9CD50C-138C-4213-BEB2-08717627448D}
+		{9572AB4D-3A70-4D13-931B-AA2FDD3AD8F3} = {0A783961-AD59-40F6-AD59-E607642337F4}
+	EndGlobalSection
+EndGlobal

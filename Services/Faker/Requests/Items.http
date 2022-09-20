@@ -1,0 +1,25 @@
+@hostname = http://localhost:7071/api
+
+
+GET {{hostname}}/v1/items HTTP/1.1
+Accept: application/json
+
+
+###
+
+
+GET {{hostname}}/v1/items/{{$guid}} HTTP/1.1
+Accept: application/json
+
+
+###
+
+
+POST {{hostname}}/v1/items HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+	"name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas efficitur.",
+	"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae consectetur elit. Curabitur eget imperdiet libero. Sed vel velit elit. Vivamus ut vulputate sapien. Phasellus luctus fermentum ligula eget bibendum. Duis condimentum in mauris vel ultricies. Sed facilisis eros sed erat facilisis pellentesque. Aenean nec nulla vitae velit lobortis cursus. Nulla auctor aliquet libero, at dignissim eros egestas quis. Pellentesque id nisi vitae quam iaculis accumsan molestie id turpis. Quisque sit amet magna non lorem ullamcorper vehicula. Nunc venenatis sollicitudin tellus a egestas. Maecenas erat orci, tincidunt id malesuada quis, varius vitae justo. Vestibulum euismod ultrices turpis."
+}
