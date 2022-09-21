@@ -74,4 +74,11 @@ public class Items
 
 		return response;
 	}
+
+	[Function(nameof(DeleteItemByIdAsync))]
+	public HttpResponseData DeleteItemByIdAsync([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "v1/items/{id:guid}")] HttpRequestData req, string id)
+	{
+        var response = req.CreateResponse(HttpStatusCode.NoContent);
+		return response;
+	}
 }
