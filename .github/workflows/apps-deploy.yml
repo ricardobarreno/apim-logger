@@ -1,0 +1,111 @@
+name: Functions Deploy
+
+on:
+  push:
+    branches: [main]
+
+env:
+  FAKER_SERVICE_NAME: 'faker-service'
+  FAKER_SERVICE_PACKAGE_PATH: 'Services/Faker/APIM.Faker.Service'
+  LOGGER_SERVICE_NAME: 'logger-service'
+  LOGGER_SERVICE_PACKAGE_PATH: 'Services/Logger/APIM.Logger.Service'
+
+  AZURE_FUNCTIONAPP_NAME: your-app-name  # set this to your application's name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'    # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '6.0.x'                # set this to the dotnet version to use
+
+jobs:
+  check_changed_folders:
+    name: Check modified files
+    outputs:
+      run_faker_function_job: ${{ steps.check_files.outputs.run_faker_function_job }}
+      run_logger_function_job: ${{ steps.check_files.outputs.run_logger_function_job }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Check modified files
+        id: check_files
+        run: |
+          echo "========== check paths of modified files =========="
+          git diff --name-only HEAD^ HEAD > files.txt
+          echo "::set-output name=run_faker_function_job::false"
+          echo "::set-output name=run_logger_function_job::false"
+          while IFS= read -r file
+          do
+            echo $file
+            if [[ $file == Services/Faker/* ]]; then
+              echo "::set-output name=run_faker_function_job::true"
+              continue
+            elif [[ $file == Services/Logger/* ]]; then
+              echo "::set-output name=run_logger_function_job::true"
+              continue
+            fi
+          done < files.txt
+
+  build-and-deploy-faker-service:
+    runs-on: ubuntu-latest
+    name: Update the Faker Service
+    needs: check_changed_folders
+    if: needs.check_changed_folders.outputs.run_faker_function_job == 'true'
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: 'Resolve Project Dependencies Using Dotnet'
+        shell: bash
+        run: |
+          pushd './${{ env.FAKER_SERVICE_PACKAGE_PATH }}'
+          dotnet build --configuration Release --output ./output
+          popd
+      - name: 'Run Azure Functions action'
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ env.FAKER_SERVICE_NAME }}
+          package: '${{ env.FAKER_SERVICE_PACKAGE_PATH }}/output'
+          publish-profile: ${{ secrets.FAKER_SERVICE_PUBLISH_PROFILE }}
+
+  build-and-deploy-logger-service:
+    runs-on: ubuntu-latest
+    name: Update the Logger Service
+    needs: check_changed_folders
+    if: needs.check_changed_folders.outputs.run_logger_function_job == 'true'
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: 'Resolve Project Dependencies Using Dotnet'
+        shell: bash
+        run: |
+          pushd './${{ env.LOGGER_SERVICE_PACKAGE_PATH }}'
+          dotnet build --configuration Release --output ./output
+          popd
+      - name: 'Run Azure Functions action'
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ env.LOGGER_SERVICE_NAME }}
+          package: '${{ env.LOGGER_SERVICE_PACKAGE_PATH }}/output'
+          publish-profile: ${{ secrets.LOGGER_SERVICE_PUBLISH_PROFILE }}
